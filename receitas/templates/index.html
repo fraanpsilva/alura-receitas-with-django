@@ -15,9 +15,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="#" method="post">
+                    <form action="{% url 'buscar' %}">
                         <label>
-                            <input type="search" name="search" placeholder="O que está procurando...">
+                            <input type="text" name="buscar" placeholder="O que está procurando...">
                         </label>
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
@@ -26,28 +26,34 @@
         </div>
     </div>
 
-{% include 'partials/menu.html' %}
+    {% include 'partials/menu.html' %}
 
     <!-- ##### Best Receipe Area Start ##### -->
     <section class="best-receipe-area">
         <div class="container">
             <div class="row">
-{#                passando objetos do banco de dados#}
-                {% if receitas  %}
-                {% for receita in receitas %}
+                {#                passando objetos do banco de dados#}
+                {% if receitas %}
+                    {% for receita in receitas %}
 
-                <!-- Single Best Receipe Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-best-receipe-area mb-30">
-                        <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
-                        <div class="receipe-content">
-                            <a href="{% url 'receita' receita.id %}">
-                                <h5>{{ receita.nome_receita }}</h5>
-                            </a>
+                        <!-- Single Best Receipe Area -->
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="single-best-receipe-area mb-30">
+                                {#                        carregando uma imagem da receita, caso tiver#}
+                                {% if receita.foto_receita == '' %}
+                                <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
+                                {% else %}
+                                <img src="{{ receita.foto_receita.url }}" alt="">
+                                {% endif %}
+
+                                <div class="receipe-content">
+                                    <a href="{% url 'receita' receita.id %}">
+                                        <h5>{{ receita.nome_receita }}</h5>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
                 {% else %}
                 {% endif %}
 
@@ -58,6 +64,6 @@
     <!-- ##### Best Receipe Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-   {% include 'partials/footer.html' %}
+    {% include 'partials/footer.html' %}
     <!-- ##### Footer Area Start ##### -->
 {% endblock %}
