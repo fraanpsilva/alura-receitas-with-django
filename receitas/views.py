@@ -3,8 +3,8 @@ from .models import Receita
 
 
 def index(request):
-    # pegando os dados do banco
-    receitas = Receita.objects.all()
+    # pegando os dados do banco - filtrando e mostrando
+    receitas = Receita.objects.order_by('-data_receita').filter(publicada=True)
     dados = {
         'receitas' : receitas
     }
